@@ -1,4 +1,4 @@
-package com.edex.dto.request;
+package com.edex.commerce.dto.request;
 
 public class Login {
     private String username;

@@ -3,7 +3,7 @@ package com.edex.commerce.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.edex.dto.request.Login;
+import com.edex.commerce.dto.request.Login;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
