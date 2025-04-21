@@ -4,7 +4,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edex.commerce.dto.request.Login;
+import com.edex.commerce.model.User;
+import com.edex.commerce.repo.UserRepo;
 
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +48,22 @@ public class UserController {
             .body("Failed");
         }       
 
+    }
+
+    @Autowired
+    private UserRepo userRepo;
+    
+    @GetMapping("/insert")
+    public User insert(){
+        User user = new User();
+        user.setUsername("mukilan");
+        user.setPassword("12345");
+        user.setFirstName("Karumukilan");
+        user.setLastName("Subbiah");
+        user.setAvatar("image.jpg");
+        user.setCreatedAt(new Date());
+        User savedObject = userRepo.saveAndFlush(user);
+        return savedObject;
     }
 
 }
