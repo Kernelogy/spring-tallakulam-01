@@ -4,14 +4,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edex.commerce.dto.request.Login;
+import com.edex.commerce.dto.request.UserRequestDto;
 import com.edex.commerce.model.User;
 import com.edex.commerce.repo.UserRepo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,6 +67,33 @@ public class UserController {
         user.setCreatedAt(new Date());
         User savedObject = userRepo.saveAndFlush(user);
         return savedObject;
+    }
+    @PostMapping("/insert")
+    public User insert(@RequestBody UserRequestDto dto){
+        User user = new User();
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setAvatar(dto.getAvatar());
+        user.setCreatedAt(new Date());
+        User savedObj = userRepo.saveAndFlush(user);
+        return savedObj;
+    }
+    @GetMapping("/list")
+    public List<User> listUsers(){
+        List<User> users = userRepo.findAll();
+        return users;
+    }
+    @GetMapping("/get/{id}")
+    public ResponseEntity<User> getUser(@PathVariable int id){
+        User user = userRepo.findById(id).get();        
+        return ResponseEntity.ok().body(user);
+    }
+    @GetMapping("/getByUsername/{username}")
+    public ResponseEntity<List<User>> getUsername(@PathVariable String username){
+        List<User> users = userRepo.findByUsername(username);       
+        return ResponseEntity.ok().body(users);
     }
 
 }
