@@ -87,13 +87,28 @@ public class UserController {
     }
     @GetMapping("/get/{id}")
     public ResponseEntity<User> getUser(@PathVariable int id){
-        User user = userRepo.findById(id).get();        
+        // User user = userRepo.findById(id).get();        
+        User user = userRepo.findByUserId(id);
         return ResponseEntity.ok().body(user);
     }
     @GetMapping("/getByUsername/{username}")
     public ResponseEntity<List<User>> getUsername(@PathVariable String username){
         List<User> users = userRepo.findByUsername(username);       
         return ResponseEntity.ok().body(users);
+    }
+    @PostMapping("/signin")
+    public ResponseEntity<String> signin(@RequestBody Login dto){
+        User user = userRepo.findByUsernameAndPassword(dto.getUsername(), dto.getPassword());
+        if(user != null){
+            return ResponseEntity.ok().body("Success");
+        }else{
+            return ResponseEntity.ok().body("Failed");
+        }
+    }
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable int id){
+        userRepo.deleteById(id);       
+        return ResponseEntity.ok().body("Success");
     }
 
 }
