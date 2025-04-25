@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @RestController
@@ -109,6 +110,17 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable int id){
         userRepo.deleteById(id);       
         return ResponseEntity.ok().body("Success");
+    }
+    @PostMapping("/update")
+    public ResponseEntity<String> updateUser(@RequestBody UserRequestDto dto){
+        User user = userRepo.findById(dto.getId()).get();
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+        user.setAvatar(dto.getAvatar());
+        userRepo.saveAndFlush(user);
+        return ResponseEntity.ok().body("User Updated Successfully");
     }
 
 }

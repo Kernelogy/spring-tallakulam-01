@@ -1,6 +1,7 @@
 package com.edex.commerce.dto.request;
 
 public class UserRequestDto {
+    private int id;
     private String username;
     private String password;
     private String firstName;
@@ -14,6 +15,7 @@ public class UserRequestDto {
         this.lastName = lastName;
         this.avatar = avatar;
     }
+    
     public String getUsername() {
         return username;
     }
@@ -43,6 +45,14 @@ public class UserRequestDto {
     }
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
 }
