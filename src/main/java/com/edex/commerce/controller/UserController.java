@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.edex.commerce.dto.request.Login;
 import com.edex.commerce.dto.request.UserRequestDto;
+import com.edex.commerce.dto.response.LoginResponse;
 import com.edex.commerce.model.User;
 import com.edex.commerce.repo.UserRepo;
 
@@ -98,12 +99,18 @@ public class UserController {
         return ResponseEntity.ok().body(users);
     }
     @PostMapping("/signin")
-    public ResponseEntity<String> signin(@RequestBody Login dto){
+    public ResponseEntity<LoginResponse> signin(@RequestBody Login dto){
         User user = userRepo.findByUsernameAndPassword(dto.getUsername(), dto.getPassword());
         if(user != null){
-            return ResponseEntity.ok().body("Success");
+            LoginResponse res = new LoginResponse();
+            res.setStatus(true);
+            res.setMessage("User Found");
+            return ResponseEntity.ok().body(res);
         }else{
-            return ResponseEntity.ok().body("Failed");
+            LoginResponse res = new LoginResponse();
+            res.setStatus(false);
+            res.setMessage("User Not Found");            
+            return ResponseEntity.ok().body(res);
         }
     }
     @GetMapping("/delete/{id}")
